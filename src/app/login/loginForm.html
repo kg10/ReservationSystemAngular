@@ -1,0 +1,112 @@
+
+ 
+<form id="loginForm" [formGroup]="loginForm" (ngSubmit)="signIn(loginForm.value)" data-toggle="validator">
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">
+            <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+        </span>
+        <input id="login" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" [formControl]="loginForm.controls['login']"
+        />
+    </div>
+    <br>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">
+            <i class="glyphicon glyphicon-lock"></i>
+        </span>
+        <input id="password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" [formControl]="loginForm.controls['password']">
+
+    </div>
+    <br>
+    <!-- <a [routerLink]="['../nav/reservation']"> -->
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-user"></span> Sign in</button>
+    <!-- </a> -->
+
+    <div class="registration">
+
+        <!-- Button to Open the Modal -->
+        <button type="button" class="btn btn-secondary" [disabled]="!isValidForm()" data-toggle="modal" data-target="#myModal"> Register </button>
+
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Registration</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form id="registerForm" [formGroup]="registerForm">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">
+                                    <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                                </span>
+                                <input id="Name" type="text" class="form-control" placeholder="Name" aria-describedby="basic-addon1" [formControl]="registerForm.controls['firstName']"
+                                />
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">
+                                    <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                                </span>
+                                <input id="Surname" type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1" [formControl]="registerForm.controls['lastName']"
+                                />
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">
+                                    <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                                </span>
+                                <input id="Email" type="email" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [formControl]="registerForm.controls['email']"
+                                />
+                            </div>
+                            <br>
+                            <!-- <mat-form-field>
+                  <input matInput placeholder="Enter your email" [formControl]="registerForm.controls['email']" required>
+                   <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> 
+                </mat-form-field>
+                <div [hidden]="email.valid">Invalid</div> -->
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">
+                                    <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                                </span>
+                                <input id="Login" type="text" class="form-control" placeholder="Login" aria-describedby="basic-addon1" [formControl]="registerForm.controls['login']"
+                                />
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">
+                                    <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                                </span>
+                                <input id="Password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" [formControl]="registerForm.controls['password']"
+                                />
+                            </div>
+                            <br>
+
+                        </form>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" (click)="register(registerForm.value)">
+                            <span class="glyphicon glyphicon-user"></span> Register</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <br>
+    <br>
+</form>
+
+<router-outlet></router-outlet>

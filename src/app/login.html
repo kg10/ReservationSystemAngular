@@ -1,0 +1,329 @@
+<body data-spy="scroll" data-target="#navbar-example">
+
+
+  <!-- 
+  <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="signIn(loginForm.value)" data-toggle="validator">
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">
+        <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+      </span>
+      <input id="login" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" [formControl]="loginForm.controls['login']"
+      />
+    </div>
+    <br>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">
+        <i class="glyphicon glyphicon-lock"></i>
+      </span>
+      <input id="password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" [formControl]="loginForm.controls['password']">
+
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">
+      <span class="glyphicon glyphicon-user"></span> Sign in</button>
+  </form> -->
+
+  <!--  -->
+  <div class="signIn">
+
+    <!-- Button to Open the Modal -->
+    <!-- <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal2"> Sign in </button> -->
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal2">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Sign in</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form id="loginForm" [formGroup]="loginForm" data-toggle="validator">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                </span>
+                <input id="login" type="text" class="form-control" placeholder="Login" aria-describedby="basic-addon1" [formControl]="loginForm.controls['login']"
+                />
+              </div>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                </span>
+                <input id="password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" [formControl]="loginForm.controls['password']"
+                />
+              </div>
+              <br>
+
+            </form>
+
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" (click)="signIn(loginForm.value)">
+              <span class="glyphicon glyphicon-user"></span> Sign in</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="registration">
+    <!-- Button to Open the Modal -->
+    <!-- <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal"> Register </button> -->
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Registration</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form id="registerForm" [formGroup]="registerForm">
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                </span>
+                <input id="Name" type="text" class="form-control" placeholder="Name" aria-describedby="basic-addon1" [formControl]="registerForm.controls['firstName']"
+                />
+              </div>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                </span>
+                <input id="Surname" type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1" [formControl]="registerForm.controls['lastName']"
+                />
+              </div>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                </span>
+                <input id="Email" type="email" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [formControl]="registerForm.controls['email']"
+                />
+              </div>
+              <br>
+              <!-- <mat-form-field>
+                  <input matInput placeholder="Enter your email" [formControl]="registerForm.controls['email']" required>
+                   <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> 
+                </mat-form-field>
+                <div [hidden]="email.valid">Invalid</div> -->
+
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                </span>
+                <input id="Login" type="text" class="form-control" placeholder="Login" aria-describedby="basic-addon1" [formControl]="registerForm.controls['login']"
+                />
+              </div>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                </span>
+                <input id="Password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" [formControl]="registerForm.controls['password']"
+                />
+              </div>
+              <br>
+
+            </form>
+
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" (click)="register(registerForm.value)">
+              <span class="glyphicon glyphicon-user"></span> Register</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <br>
+  <br>
+  <br>
+
+
+
+
+
+  <!-- <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#section1">Section 1</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#section2">Section 2</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#section3">Section 3</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          Section 4
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#section41">Link 1</a>
+          <a class="dropdown-item" href="#section42">Link 2</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal"> Register </button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal2"> Sign in </button>
+
+      </li>
+    </ul>
+  </nav> -->
+
+  <div id="section1" class="container-fluid">
+    <!--<mat-radio-group>
+      <mat-radio-button value="1">Option 1</mat-radio-button>
+      <mat-radio-button value="2">Option 2</mat-radio-button>
+    </mat-radio-group> -->
+    <h1>Select your performer</h1>
+    <!-- <input type="text" id="findPerson" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"> -->
+    <table datatable class="row-border hover" id="personnelTable" cellspacing="0" width="90%">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Description</th>
+        </tr>
+
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of personnel" (click)="getPersonId(p.id)">
+          <td> {{p.firstName}}</td>
+          <td> {{p.lastName}}</td>
+          <td> {{p.descriptionPerson}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="section2" class="container-fluid">
+    <h1>Select service</h1>
+    <!-- <input type="text" id="findPerson" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"> -->
+    <table datatable class="row-border hover" id="serviceTable">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Time</th>
+          <th>Price</th>
+        </tr>
+
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of service" (click)="getServiceId(s.id)">
+          <td> {{s.descriptionService}}</td>
+          <td> {{s.duration}}</td>
+          <td> {{s.price}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div id="section3" class="container-fluid">
+    {{dt| date:'yyyy-MM-dd'}}
+
+    <h1>Select date </h1>
+
+    <input id="time" class="min-today" placeholder="Choose a date" type="date" [value]="timeInput" [min]="today" #date>
+    <button type="button" class="btn btn-primary" (click)="submitt(date)" >Check free dates</button>
+
+
+
+  </div>
+  <div id="section41" class="container-fluid">
+    <h1>Select hour</h1>
+
+    <ng-container *ngFor="let status of times ; let i=index">
+      <mat-radio-group layout="row">
+        <div *ngIf="i < 5; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+          <tr>
+            <input #widget class='with-gap' type='radio' [value]='status' name="optradio" data-toggle="modal" data-target="#confirmModal"
+              (change)="setTime(status)">
+            <!-- (change)="reserve(status)"-->
+
+            <!-- <mat-radio-button [value]='status' (change)="reserve(status)">{{status}}</mat-radio-button> -->
+
+            <label> {{status}}</label>
+          </tr>
+        </ng-template>
+      </mat-radio-group>
+      <ng-template #elseBlock>
+        <tr>
+          <input #widget class='with-gap2' type='radio' [value]='status' name="optradio" data-toggle="modal" data-target="#confirmModal"
+            (change)="setTime(status)">
+          <!-- (change)="reserve(status)"-->
+          <label> {{status}}</label>
+        </tr>
+      </ng-template>
+
+    </ng-container>
+  </div>
+  <!--
+  <div id="section42" class="container-fluid">
+    <h1>Section 4 Submenu 2</h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the
+      navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the
+      navigation bar while scrolling!</p>
+  </div> -->
+
+  <router-outlet></router-outlet>
+
+</body>
+
+<div class="confirmReservation">
+
+  <div class="modal fade" id="confirmModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Did you want reserve visit?</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="reserve()" data-dismiss="modal">
+            <span class="glyphicon glyphicon-user"></span> Ok</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+

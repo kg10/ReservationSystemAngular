@@ -1,0 +1,329 @@
+<div class="alert alert-{{alert.type}} alert-dismissible fade show" role="alert">
+  {{alert.message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<br>
+<br>
+<table datatable class="row-border hover" id="personnelTablee" cellspacing="0" width="90%">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Description</th>
+      <th data-toggle="tooltip" data-placement="bottom" title="Want edit row? Click me">Edit</th>
+    </tr>
+
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of personnel">
+      <td> {{p.firstName}}</td>
+      <td> {{p.lastName}}</td>
+      <td> {{p.descriptionPerson}}</td>
+      <td>
+        <button class="btn btn-success" data-toggle="modal" data-target="#myModal2" (click)=editPersonnel(p)>P </button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalService" (click)=selectServiceByPerson(p.id)>S </button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#modalTime" (click)=selectTimeByPerson(p.id)>T </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+
+<div class="editTimeTable">
+
+  <div class="modal fade" id="modalTime">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Edit time table person`s</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <table class="row-border hover" id="tableService">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Update</th>
+              </tr>
+
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of timeTableList">
+                <td> {{s.day}}</td>
+                <td> {{s.timeFrom}}</td>
+                <td> {{s.timeTo}}</td>
+                <td>
+                  <button class="btn btn-danger" (click)=deleteTime(s)>X</button>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <p>
+            <button class="btn btn-primary btn-circle btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+              aria-controls="collapseExample">
+              +
+            </button>
+          </p>
+          <div class="collapse" id="collapseExample">
+            <dt>Add new service to person</dt>
+            <form id="serviceForm" [formGroup]="timeForm" (ngSubmit)="addTimeToList()" data-toggle="validator">
+              <div class="input-group">
+                <button type="submit" class="btn btn-primary btn-circle btn-sm">+</button>
+
+                <select [formControl]="timeForm.controls['day']">
+                  <option value="2">Mon</option>
+                  <option value="3">Tue</option>
+                  <option value="4">Wed</option>
+                  <option value="5">Thu</option>
+                  <option value="6">Fri</option>
+                  <option value="7">Sat</option>
+                  <option value="1">Sun</option>
+                </select>
+
+                <input id="from" type="time" class="form-control" placeholder="Time start work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeFrom']"
+                />
+                <input id="to" type="time" class="form-control" placeholder="Time end work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeTo']"
+                />
+
+
+              </div>
+            </form>
+          </div>
+          <br>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="sendEditTime()">Submit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="getServiceByPerson">
+
+  <div class="modal fade" id="modalService">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Services that are performed by an employee</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <table class="row-border hover" id="tableService">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Update</th>
+              </tr>
+
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of descriptionList">
+                <td> {{s}}</td>
+                <td>
+                  <button class="btn btn-danger" (click)=deleteDescription(s)>X</button>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <p>
+            <button class="btn btn-primary btn-circle btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false"
+              aria-controls="collapseExample2">
+              +
+            </button>
+          </p>
+          <div class="collapse" id="collapseExample2">
+            <dt>Add new service to person</dt>
+            <div class="input-group">
+              <button (click)="addServiceToList()" class="btn btn-primary btn-circle btn-sm">+</button>
+
+              <select class="form-control" [formControl]="serviceNameForm.controls['dscr']">
+                <option *ngFor="let type of service" [value]=type.descriptionService>{{type.descriptionService}}</option>
+              </select>
+
+
+            </div>
+
+          </div>
+          <br>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="sendAssign()">Submit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="editAllPersonnel">
+
+  <div class="modal fade" id="myModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Edit person</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form id="personnelForm" [formGroup]="personnelForm">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">
+                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+              </span>
+              <input id="Name" type="text" class="form-control" placeholder="Name" aria-describedby="basic-addon1" [formControl]="personnelForm.controls['firstName']"
+              />
+            </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">
+                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+              </span>
+              <input id="Surname" type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1" [formControl]="personnelForm.controls['lastName']"
+              />
+            </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">
+                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+              </span>
+              <input id="Email" type="email" class="form-control" placeholder="About me" aria-describedby="basic-addon1" [formControl]="personnelForm.controls['descriptionPerson']"
+              />
+            </div>
+            <br>
+          </form>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="disablePerson(personnelForm.value)" data-toggle="tooltip" data-dismiss="modal"
+            data-placement="bottom" title="Click if you want delete this person">Delete person</button>
+          <button type="submit" class="btn btn-primary" (click)="editOnePerson(personnelForm.value)" data-dismiss="modal">
+            <span class="glyphicon glyphicon-user"></span> Edit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<table datatable class="row-border hover" id="serviceTable">
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th>Time</th>
+      <th>Price</th>
+      <th>Edit</th>
+    </tr>
+
+  </thead>
+  <tbody>
+    <tr *ngFor="let s of service">
+      <td> {{s.descriptionService}}</td>
+      <td> {{s.duration}}</td>
+      <td> {{s.price}}</td>
+      <td>
+        <button class="btn btn-success" data-toggle="modal" data-target="#myModal" (click)=editService(s)>Update </button>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="editAllServices">
+
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Edit service</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form id="serviceForm" [formGroup]="serviceForm">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">
+                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+              </span>
+              <input id="Name" type="text" class="form-control" placeholder="Description service" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['descriptionService']"
+              />
+            </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">
+                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+              </span>
+              <input id="Surname" type="text" class="form-control" placeholder="Duration" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['duration']"
+              />
+            </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">
+                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+              </span>
+              <input id="Email" type="email" class="form-control" placeholder="Price" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['price']"
+              />
+            </div>
+            <br>
+          </form>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="editOneService(serviceForm.value)">
+            <span class="glyphicon glyphicon-user"></span> Edit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>

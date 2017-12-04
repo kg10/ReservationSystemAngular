@@ -1,0 +1,106 @@
+<form id="personForm" [formGroup]="personForm" (ngSubmit)="createPerson(personForm.value)" data-toggle="validator">
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">
+      <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+    </span>
+    <input id="login" type="text" class="form-control" placeholder="FirstName" aria-describedby="basic-addon1" [formControl]="personForm.controls['firstName']"
+    />
+  </div>
+  <br>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">
+      <i class="glyphicon glyphicon-lock"></i>
+    </span>
+    <input id="password" type="text" class="form-control" placeholder="LastName" aria-describedby="basic-addon1" [formControl]="personForm.controls['lastName']">
+
+  </div>
+  <br>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">
+      <i class="glyphicon glyphicon-lock"></i>
+    </span>
+    <input id="password" type="text" class="form-control" placeholder="About person" aria-describedby="basic-addon1" [formControl]="personForm.controls['descriptionPerson']">
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary">
+    <span class="glyphicon glyphicon-user"></span> Create person</button>
+</form>
+
+<div class="alert alert-{{alert.type}} alert-dismissible fade show" role="alert">
+  {{alert.message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
+<p>
+  <button class="btn btn-primary btn-circle btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+    aria-controls="collapseExample">
+    +
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+  <dt>Set working hours</dt>
+  <form id="serviceForm" [formGroup]="timeForm" (ngSubmit)="addTime()" data-toggle="validator">
+    <div class="input-group">
+      <button type="submit" class="btn btn-primary btn-circle btn-sm">+</button>
+
+      <span class="input-group-addon" id="basic-addon1">
+        <span class="ui-icon ui-icon-arrowthick-1-n">
+          <select [formControl]="timeForm.controls['day']">
+            <option value="2">Mon</option>
+            <option value="3">Tue</option>
+            <option value="4">Wed</option>
+            <option value="5">Thu</option>
+            <option value="6">Fri</option>
+            <option value="7">Sat</option>
+            <option value="1">Sun</option>
+          </select>
+        </span>
+      </span>
+      <input id="from" type="time" class="form-control" placeholder="Time start work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeFrom']"
+      />
+      <input id="to" type="time" class="form-control" placeholder="Time end work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeTo']"
+      />
+    </div>
+    <br>
+  </form>
+</div>
+<br>
+<br>
+<br>
+
+
+
+<br>
+<br>
+
+<form id="serviceForm" [formGroup]="serviceForm" (ngSubmit)="createService()" data-toggle="validator">
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">
+      <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+    </span>
+    <input id="login" type="text" class="form-control" placeholder="Something about service" aria-describedby="basic-addon1"
+      [formControl]="serviceForm.controls['descriptionService']" />
+  </div>
+  <br>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">
+      <i class="glyphicon glyphicon-lock"></i>
+    </span>
+    <input id="password" type="time" class="form-control" placeholder="Duration" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['duration']">
+
+  </div>
+  <br>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">
+      <i class="glyphicon glyphicon-lock"></i>
+    </span>
+    <input id="password" type="text" class="form-control" placeholder="Price" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['price']">
+
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary">
+    <span class="glyphicon glyphicon-user"></span> Create service</button>
+</form>

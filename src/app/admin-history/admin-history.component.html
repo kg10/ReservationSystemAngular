@@ -1,0 +1,28 @@
+<h1>All history reservation</h1>
+<!-- <input type="text" id="findPerson" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"> -->
+<table datatable class="row-border hover" id="history" cellspacing="0" width="90%">
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th>Service`s person</th>
+      <th>Client </th>
+      <th>Status</th>
+      <th>Time</th>
+      <th>Date</th>
+      <th>Delete</th>
+    </tr>
+
+  </thead>
+  <tbody>
+    <tr *ngFor="let h of hist" > <!--(click)="getPersonId(p.id)" -->
+      <td> {{h.service}}</td>
+      <td> {{h.personnel}}</td>
+      <td> {{h.client}}</td>
+      <td> {{h.status}}</td>
+      <td> {{h.timeFrom}}</td>
+      <td> {{h.date}}</td>
+      <td><button class="btn btn-danger" (click)=deleteAllReservation(h.id)> X</button></td>
+    </tr>
+  </tbody>
+</table>
+<router-outlet></router-outlet>

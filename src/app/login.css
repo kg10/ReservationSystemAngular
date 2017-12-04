@@ -1,0 +1,41 @@
+body{
+    background-color: #eeeeee;
+    position: relative;
+    padding-left:10%;
+    padding-right: 10%;
+}
+
+form button{
+    padding-left: 8%;
+    padding-right: 8%;
+    margin-left: 35%;
+    margin-bottom: 3px;
+}
+.registration{
+    margin-right: 10px;
+}
+form{
+    padding-top:10%;
+    padding-left:25%;
+    padding-right:25%;
+}
+
+
+.vertical-offset-100{
+    padding-top:200px;
+}
+
+.modal-header .modal-body{
+     color: rgb(46, 36, 36);
+}
+
+
+/* table{
+    padding-left: 100px;
+} */
+
+#section1 {padding-top:50px;height:800px;color: rgb(46, 36, 36); background-color: rgb(182, 218, 250);}
+#section2 {padding-top:50px;height:800px;color: rgb(17, 15, 15); background-color: #673ab7;}
+#section3 {padding-top:50px;height:500px;color: rgb(20, 15, 15); background-color: #faf4ec;}
+#section41 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
+#section42 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
