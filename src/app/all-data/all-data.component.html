@@ -1,106 +1,116 @@
-<form id="personForm" [formGroup]="personForm" (ngSubmit)="createPerson(personForm.value)" data-toggle="validator">
-  <div class="input-group">
-    <span class="input-group-addon" id="basic-addon1">
-      <span class="ui-icon ui-icon-arrowthick-1-n"></span>
-    </span>
-    <input id="login" type="text" class="form-control" placeholder="FirstName" aria-describedby="basic-addon1" [formControl]="personForm.controls['firstName']"
-    />
-  </div>
-  <br>
-  <div class="input-group">
-    <span class="input-group-addon" id="basic-addon1">
-      <i class="glyphicon glyphicon-lock"></i>
-    </span>
-    <input id="password" type="text" class="form-control" placeholder="LastName" aria-describedby="basic-addon1" [formControl]="personForm.controls['lastName']">
+<br>
+<p-growl [(value)]="msgs">
+</p-growl>
 
-  </div>
-  <br>
-  <div class="input-group">
-    <span class="input-group-addon" id="basic-addon1">
-      <i class="glyphicon glyphicon-lock"></i>
-    </span>
-    <input id="password" type="text" class="form-control" placeholder="About person" aria-describedby="basic-addon1" [formControl]="personForm.controls['descriptionPerson']">
-  </div>
-  <br>
-  <button type="submit" class="btn btn-primary">
-    <span class="glyphicon glyphicon-user"></span> Create person</button>
-</form>
-
-<div class="alert alert-{{alert.type}} alert-dismissible fade show" role="alert">
-  {{alert.message}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-
-
-<p>
-  <button class="btn btn-primary btn-circle btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
-    aria-controls="collapseExample">
-    +
-  </button>
-</p>
-<div class="collapse" id="collapseExample">
-  <dt>Set working hours</dt>
-  <form id="serviceForm" [formGroup]="timeForm" (ngSubmit)="addTime()" data-toggle="validator">
-    <div class="input-group">
-      <button type="submit" class="btn btn-primary btn-circle btn-sm">+</button>
-
-      <span class="input-group-addon" id="basic-addon1">
-        <span class="ui-icon ui-icon-arrowthick-1-n">
-          <select [formControl]="timeForm.controls['day']">
-            <option value="2">Mon</option>
-            <option value="3">Tue</option>
-            <option value="4">Wed</option>
-            <option value="5">Thu</option>
-            <option value="6">Fri</option>
-            <option value="7">Sat</option>
-            <option value="1">Sun</option>
-          </select>
-        </span>
+<div class="personForm">
+  <h4>Add personel and his working time to system</h4>
+  <form id="personForm" [formGroup]="personForm" (ngSubmit)="createPerson(personForm.value)" data-toggle="validator">
+    <div class="input-group" [ngClass]="{'has-error':!personForm.controls['firstName'].valid && personForm.controls['firstName'].touched}">
+      <span class="input-group-addon">
+        <i class="fa fa-user fa-fw"></i>
       </span>
-      <input id="from" type="time" class="form-control" placeholder="Time start work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeFrom']"
-      />
-      <input id="to" type="time" class="form-control" placeholder="Time end work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeTo']"
+      <input id="login" type="text" class="form-control" placeholder="FirstName" aria-describedby="basic-addon1" [formControl]="personForm.controls['firstName']"
       />
     </div>
-    <br>
+    <div *ngIf="personForm.controls['firstName'].hasError('required') && personForm.controls['firstName'].touched" class="alert alert-danger">You must include a name.</div>
+    <div class="input-group" [ngClass]="{'has-error':!personForm.controls['lastName'].valid}">
+      <span class="input-group-addon">
+        <i class="fa fa-user fa-fw"></i>
+      </span>
+      <input id="lastName" type="text" class="form-control" placeholder="LastName" aria-describedby="basic-addon1" [formControl]="personForm.controls['lastName']">
+    </div>
+    <div *ngIf="personForm.controls['lastName'].hasError('required') && personForm.controls['lastName'].touched" class="alert alert-danger">You must include a surname.</div>
+    <div class="input-group" [ngClass]="{'has-error':!personForm.controls['descriptionPerson'].valid}">
+      <span class="input-group-addon">
+        <i class="fa fa-info-circle fa-fw"></i>
+      </span>
+      <input id="descriptio" type="text" class="form-control" placeholder="About person" aria-describedby="basic-addon1" [formControl]="personForm.controls['descriptionPerson']">
+    </div>
+    <div *ngIf="personForm.controls['descriptionPerson'].hasError('required') && personForm.controls['descriptionPerson'].touched"
+      class="alert alert-danger">You must include a description.</div>
+    <div *ngIf="personForm.controls['descriptionPerson'].hasError('minlength') && personForm.controls['descriptionPerson'].touched"
+      class="alert alert-danger">Your description must be at least 5 characters long.</div>
+    <div *ngIf="personForm.controls['descriptionPerson'].hasError('maxlength') && personForm.controls['descriptionPerson'].touched"
+      class="alert alert-danger">Your description cannot exceed 255 characters.</div>
+    <div class="buttons" style="display: inline;">
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+        aria-controls="collapseExample">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+      </button>
+      <button type="submit" class="btn btn-primary" [disabled]="!personForm.valid">
+        <span class="glyphicon glyphicon-user"></span> Create person</button>
+    </div>
   </form>
+
+  <div class="collapse" id="collapseExample">
+    <dt>Set working hours</dt>
+    <form id="serviceForm" [formGroup]="timeForm" (ngSubmit)="addTime()" data-toggle="validator">
+      <div class="ui-g-12 ui-md-4" [ngClass]="{'has-error':!timeForm.controls['day'].valid && timeForm.controls['day'].touched}">
+        <h6> Day </h6>
+        <button type="submit" class="btn btn-primary btn-sm" [disabled]="!timeForm.valid">+</button>
+
+        <select [formControl]="timeForm.controls['day']">
+          <option value="2" selected>Mon</option>
+          <option value="3">Tue</option>
+          <option value="4">Wed</option>
+          <option value="5">Thu</option>
+          <option value="6">Fri</option>
+          <option value="7">Sat</option>
+          <option value="1">Sun</option>
+        </select>
+        <div *ngIf="timeForm.controls['day'].hasError('required') && timeForm.controls['day'].touched" class="alert alert-danger">You must include a day.</div>
+      </div>
+
+
+      <!-- <input id="from" type="time" class="form-control" placeholder="Time start work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeFrom']"
+      />
+      <input id="to" type="time" class="form-control" placeholder="Time end work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeTo']"
+      /> -->
+      <div class="ui-g-12 ui-md-4" [ngClass]="{'has-error':!timeForm.controls['timeFrom'].valid && timeForm.controls['timeFrom'].touched}">
+        <h6>Start time </h6>
+        <!-- <p-calendar [formControl]="timeForm.controls['timeFrom']" [timeOnly]="true"></p-calendar> -->
+        <input id="to" type="time" class="form-control" placeholder="Time end work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeFrom']">
+        <div *ngIf="timeForm.controls['timeFrom'].hasError('required') && timeForm.controls['timeFrom'].touched" class="alert alert-danger">You must include a start time.</div>
+      </div>
+      <div class="ui-g-12 ui-md-4" [ngClass]="{'has-error':!timeForm.controls['timeTo'].valid && timeForm.controls['timeTo'].touched}">
+        <h6>End time </h6>
+        <!-- <p-calendar [formControl]="timeForm.controls['timeTo']" [timeOnly]="true"></p-calendar> -->
+        <input id="to" type="time" class="form-control" placeholder="Time end work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeTo']" min ="{{timeFrom}}">
+        <div *ngIf="timeForm.controls['timeTo'].hasError('required') && timeForm.controls['timeTo'].touched" class="alert alert-danger">You must include a end time.</div>
+      </div>
+
+      <br>
+    </form>
+  </div>
 </div>
-<br>
-<br>
-<br>
 
 
-
-<br>
-<br>
-
-<form id="serviceForm" [formGroup]="serviceForm" (ngSubmit)="createService()" data-toggle="validator">
-  <div class="input-group">
-    <span class="input-group-addon" id="basic-addon1">
-      <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+<form class="serviceForm" id="serviceForm" [formGroup]="serviceForm" (ngSubmit)="createService()" data-toggle="validator">
+    <h3>Add service to system</h3>
+  <div class="input-group" [ngClass]="{'has-error':!serviceForm.controls['descriptionService'].valid && serviceForm.controls['descriptionService'].touched}">
+    <span class="input-group-addon">
+      <i class="fa fa-info-circle fa-fw"></i>
     </span>
     <input id="login" type="text" class="form-control" placeholder="Something about service" aria-describedby="basic-addon1"
       [formControl]="serviceForm.controls['descriptionService']" />
   </div>
-  <br>
-  <div class="input-group">
-    <span class="input-group-addon" id="basic-addon1">
-      <i class="glyphicon glyphicon-lock"></i>
+  <div *ngIf="serviceForm.controls['descriptionService'].hasError('required') && serviceForm.controls['descriptionService'].touched"
+    class="alert alert-danger">You must include a name service.</div>
+  <div class="input-group" [ngClass]="{'has-error':!serviceForm.controls['duration'].valid && serviceForm.controls['duration'].touched}">
+    <span class="input-group-addon">
+      <i class="fa fa-clock-o fa-fw"></i>
     </span>
-    <input id="password" type="time" class="form-control" placeholder="Duration" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['duration']">
-
+    <!-- <input id="password" type="time" class="form-control" placeholder="Duration" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['duration']"> -->
+    <p-calendar [formControl]="serviceForm.controls['duration']" [timeOnly]="true" placeholder="Duration" timeFormat="HH:mm"></p-calendar>
   </div>
-  <br>
-  <div class="input-group">
-    <span class="input-group-addon" id="basic-addon1">
-      <i class="glyphicon glyphicon-lock"></i>
+  <div *ngIf="serviceForm.controls['duration'].hasError('required') && serviceForm.controls['duration'].touched" class="alert alert-danger">You must include a duration service`s.</div>
+  <div class="input-group" [ngClass]="{'has-error':!serviceForm.controls['price'].valid && serviceForm.controls['price'].touched}">
+    <span class="input-group-addon">
+      <i class="fa fa-usd fa-fw"></i>
     </span>
-    <input id="password" type="text" class="form-control" placeholder="Price" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['price']">
-
+    <input id="price" type="number" class="form-control" placeholder="Price" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['price']">
   </div>
-  <br>
-  <button type="submit" class="btn btn-primary">
+  <div *ngIf="serviceForm.controls['price'].hasError('required') && serviceForm.controls['price'].touched" class="alert alert-danger">You must include a price service`s.</div>
+  <button type="submit" class="btn btn-primary btn-responsive" [disabled]="!serviceForm.valid">
     <span class="glyphicon glyphicon-user"></span> Create service</button>
 </form>

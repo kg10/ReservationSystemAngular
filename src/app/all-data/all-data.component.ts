@@ -1,17 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators  } from "@angular/forms";
 import { HttpService } from "../login.service";
 import { ServiceRequest } from "../model/serviceRequest.model";
 import { Service } from "../model/service.model";
 import { Personnel } from "../model/personnel.model";
 import { TimeTable } from '../model/timeTable.model';
 import { TimeRequest } from '../model/timeRequest.model';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-all-data',
   templateUrl: './all-data.component.html',
   styleUrls: ['./all-data.component.css'],
-  providers: [HttpService],
+  providers: [HttpService, MessageService],
 })
 export class AllDataComponent implements OnInit {
   alert: any = {};
@@ -26,23 +27,24 @@ export class AllDataComponent implements OnInit {
   timeRequest: TimeRequest;
   @Input('loginSave') loginSave: String;
 
-  constructor(fb: FormBuilder, private _httpService: HttpService) {
-    this.urlName = "http://localhost:8072";
+  constructor(private messageService: MessageService, fb: FormBuilder, private _httpService: HttpService) {
+    // this.urlName = "http://localhost:8072";
+    this.urlName = "http://192.168.99.100:8073/api";
     this.personForm = fb.group({
-      'firstName': '',
-      'lastName': '',
-      'descriptionPerson': '',
+      'firstName': [null, Validators.required],
+      'lastName': [null, Validators.required],
+      'descriptionPerson': [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(255)])],
       'timeTable': '',
     });
     this.serviceForm = fb.group({
-      'descriptionService': '',
-      'duration': '',
-      'price': '',
+      'descriptionService': [null, Validators.required],
+      'duration': [null, Validators.required],
+      'price': [null, Validators.required],
     });
     this.timeForm = fb.group({
-      'day': '',
-      'timeFrom': '',
-      'timeTo': '',
+      'day': [null, Validators.required],
+      'timeFrom': [null, Validators.required],
+      'timeTo': [null, Validators.required],
     });
     console.log(this.loginSave);
   }
@@ -51,13 +53,14 @@ export class AllDataComponent implements OnInit {
   }
 
   createService() {
-    this.serviceList.push(new Service(this.serviceForm.value.descriptionService, this.serviceForm.value.duration + ":00", this.serviceForm.value.price));
+    this.serviceList.push(new Service(this.serviceForm.value.descriptionService, this.serviceForm.value.duration, this.serviceForm.value.price));
     console.log("time" + this.timeForm.value);
     this._httpService
       .createService(this.urlName + "/reg/addService", this.serviceList)
       .subscribe(
       value => {
-        this.serviceForm.reset()
+        this.serviceForm.reset(),
+        this.showAlert("success", "The service has been added")
       },
       error => alert(error),
       () => {
@@ -92,7 +95,6 @@ export class AllDataComponent implements OnInit {
     this.timeList.forEach(element => {
 
       if (this.timeForm.value.day === element.day) {
-        this.newAlert('danger', 'This day was set earlier');
         this.timeForm.reset();
       }
     });
@@ -101,8 +103,8 @@ export class AllDataComponent implements OnInit {
       this.timeList.push(new TimeTable(this.timeForm.value.day, this.timeForm.value.timeFrom + ":00", this.timeForm.value.timeTo + ":00"));
       this.timeForm.reset();
     }
-    else
-      this.newAlert('info', 'Please set all value');
+    else{}
+      
   }
 
   insertTime() {
@@ -112,6 +114,7 @@ export class AllDataComponent implements OnInit {
       .subscribe(
       value => {
         // this.serviceForm.reset()
+        this.showAlert("success", "The person has been added")
       },
       error => alert(error),
       () => console.log("Finished"),
@@ -119,13 +122,9 @@ export class AllDataComponent implements OnInit {
 
   }
 
-  newAlert(type: string, message: string) {
-    this.alert = {
-      type: type,
-      message: message
-    }
-  }
+  showAlert(type: string, text: string) {
+    this.messageService.add({ severity: type, summary: 'Error', detail: text });
+}
 
-
-
+ 
 }

@@ -1,37 +1,36 @@
-<div class="alert alert-{{alert.type}} alert-dismissible fade show" role="alert">
-  {{alert.message}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+<div class="personTable">
+  <h3>Update your personel</h3>
+  <table datatable class="row-border hover" id="personnelTablee" cellspacing="0" width="90%">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Description</th>
+        <th data-toggle="tooltip" data-placement="bottom" title="Want edit row? Click me">Edit</th>
+      </tr>
+
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of personnel">
+        <td> {{p.firstName}}</td>
+        <td> {{p.lastName}}</td>
+        <td> {{p.descriptionPerson}}</td>
+        <td>
+          <button class="btn btn-success" data-toggle="modal" data-target="#myModal2" (click)=editPersonnel(p)>
+            <i class="fa fa-address-book-o" aria-hidden="true"></i>
+          </button>
+          <button class="btn btn-success" data-toggle="modal" data-target="#modalService" (click)=selectServiceByPerson(p.id)>
+            <i class="fa fa-book" aria-hidden="true"></i>
+          </button>
+          <button class="btn btn-success" data-toggle="modal" data-target="#modalTime" (click)=selectTimeByPerson(p.id)>
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<br>
-<br>
-<table datatable class="row-border hover" id="personnelTablee" cellspacing="0" width="90%">
-  <thead>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Description</th>
-      <th data-toggle="tooltip" data-placement="bottom" title="Want edit row? Click me">Edit</th>
-    </tr>
-
-  </thead>
-  <tbody>
-    <tr *ngFor="let p of personnel">
-      <td> {{p.firstName}}</td>
-      <td> {{p.lastName}}</td>
-      <td> {{p.descriptionPerson}}</td>
-      <td>
-        <button class="btn btn-success" data-toggle="modal" data-target="#myModal2" (click)=editPersonnel(p)>P </button>
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalService" (click)=selectServiceByPerson(p.id)>S </button>
-        <button class="btn btn-success" data-toggle="modal" data-target="#modalTime" (click)=selectTimeByPerson(p.id)>T </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<br>
-<br>
 
 <div class="editTimeTable">
 
@@ -69,22 +68,23 @@
               </tr>
             </tbody>
           </table>
+          <p>
+            <button class="btn btn-primary buttonInTime" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+              aria-controls="collapseExample">
+              <i class="fa fa-plus-square" aria-hidden="true"></i>
+            </button>
+          </p>
 
         </div>
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <p>
-            <button class="btn btn-primary btn-circle btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
-              aria-controls="collapseExample">
-              +
-            </button>
-          </p>
+
           <div class="collapse" id="collapseExample">
             <dt>Add new service to person</dt>
             <form id="serviceForm" [formGroup]="timeForm" (ngSubmit)="addTimeToList()" data-toggle="validator">
-              <div class="input-group">
-                <button type="submit" class="btn btn-primary btn-circle btn-sm">+</button>
+              <button type="submit" class="btn btn-primary btn-circle btn-sm" [disabled]="!timeForm.valid">+</button>
+              <div class="input-group" [ngClass]="{'has-error':!timeForm.controls['day'].valid && timeForm.controls['day'].touched}">
 
                 <select [formControl]="timeForm.controls['day']">
                   <option value="2">Mon</option>
@@ -95,16 +95,21 @@
                   <option value="7">Sat</option>
                   <option value="1">Sun</option>
                 </select>
-
+              </div>
+              <div *ngIf="timeForm.controls['day'].hasError('required') && timeForm.controls['day'].touched" class="alert alert-danger">You must include a day.</div>
+              <div class="input-group" [ngClass]="{'has-error':!timeForm.controls['timeFrom'].valid && timeForm.controls['timeFrom'].touched}">
                 <input id="from" type="time" class="form-control" placeholder="Time start work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeFrom']"
                 />
+              </div>
+              <div *ngIf="timeForm.controls['timeFrom'].hasError('required') && timeForm.controls['timeFrom'].touched" class="alert alert-danger">You must include a start time.</div>
+              <div class="input-group" [ngClass]="{'has-error':!timeForm.controls['timeTo'].valid && timeForm.controls['timeTo'].touched}">
                 <input id="to" type="time" class="form-control" placeholder="Time end work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeTo']"
                 />
-
-
               </div>
+              <div *ngIf="timeForm.controls['timeTo'].hasError('required') && timeForm.controls['timeTo'].touched" class="alert alert-danger">You must include a end time.</div>
             </form>
           </div>
+
           <br>
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="sendEditTime()">Submit</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -148,31 +153,30 @@
               </tr>
             </tbody>
           </table>
-
+          <p>
+            <button class="btn btn-primary buttonIn" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false"
+              aria-controls="collapseExample2">
+              <i class="fa fa-plus-square" aria-hidden="true"></i>
+            </button>
+          </p>
         </div>
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <p>
-            <button class="btn btn-primary btn-circle btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false"
-              aria-controls="collapseExample2">
-              +
-            </button>
-          </p>
-          <div class="collapse" id="collapseExample2">
+
+          <div class="collapseService" id="collapseExample2">
             <dt>Add new service to person</dt>
-            <div class="input-group">
-              <button (click)="addServiceToList()" class="btn btn-primary btn-circle btn-sm">+</button>
+            <div class="input-group" [ngClass]="{'has-error':!serviceNameForm.controls['dscr'].valid && serviceNameForm.controls['dscr'].touched}">
+              <button (click)="addServiceToList()" class="btn btn-primary btn-circle btn-sm" [disabled]="!serviceNameForm.valid">+</button>
 
               <select class="form-control" [formControl]="serviceNameForm.controls['dscr']">
                 <option *ngFor="let type of service" [value]=type.descriptionService>{{type.descriptionService}}</option>
               </select>
 
-
             </div>
 
           </div>
-          <br>
+
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="sendAssign()">Submit</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
@@ -198,30 +202,36 @@
         <!-- Modal body -->
         <div class="modal-body">
           <form id="personnelForm" [formGroup]="personnelForm">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+            <div class="input-group" [ngClass]="{'has-error':!personnelForm.controls['firstName'].valid && personnelForm.controls['firstName'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-user fa-fw"></i>
               </span>
               <input id="Name" type="text" class="form-control" placeholder="Name" aria-describedby="basic-addon1" [formControl]="personnelForm.controls['firstName']"
               />
             </div>
-            <br>
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+            <div *ngIf="personnelForm.controls['firstName'].hasError('required') && personnelForm.controls['firstName'].touched" class="alert alert-danger">You must include a name.</div>
+
+            <div class="input-group" [ngClass]="{'has-error':!personnelForm.controls['lastName'].valid && personnelForm.controls['lastName'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-user fa-fw"></i>
               </span>
               <input id="Surname" type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1" [formControl]="personnelForm.controls['lastName']"
               />
             </div>
-            <br>
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+            <div *ngIf="personnelForm.controls['lastName'].hasError('required') && personnelForm.controls['lastName'].touched" class="alert alert-danger">You must include a surname.</div>
+            <div class="input-group" [ngClass]="{'has-error':!personnelForm.controls['descriptionPerson'].valid && personnelForm.controls['descriptionPerson'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-info-circle fa-fw"></i>
               </span>
               <input id="Email" type="email" class="form-control" placeholder="About me" aria-describedby="basic-addon1" [formControl]="personnelForm.controls['descriptionPerson']"
               />
             </div>
-            <br>
+            <div *ngIf="personnelForm.controls['descriptionPerson'].hasError('required') && personnelForm.controls['descriptionPerson'].touched"
+              class="alert alert-danger">You must include a description.</div>
+            <div *ngIf="personnelForm.controls['descriptionPerson'].hasError('minlength') && personnelForm.controls['descriptionPerson'].touched"
+              class="alert alert-danger">Your description must be at least 5 characters long.</div>
+            <div *ngIf="personnelForm.controls['descriptionPerson'].hasError('maxlength') && personnelForm.controls['descriptionPerson'].touched"
+              class="alert alert-danger">Your description cannot exceed 255 characters.</div>
           </form>
 
         </div>
@@ -230,7 +240,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="disablePerson(personnelForm.value)" data-toggle="tooltip" data-dismiss="modal"
             data-placement="bottom" title="Click if you want delete this person">Delete person</button>
-          <button type="submit" class="btn btn-primary" (click)="editOnePerson(personnelForm.value)" data-dismiss="modal">
+          <button type="submit" class="btn btn-primary" (click)="editOnePerson(personnelForm.value)" data-dismiss="modal" [disabled]="!personnelForm.valid">
             <span class="glyphicon glyphicon-user"></span> Edit</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
@@ -241,28 +251,33 @@
 
 </div>
 
-<table datatable class="row-border hover" id="serviceTable">
-  <thead>
-    <tr>
-      <th>Service</th>
-      <th>Time</th>
-      <th>Price</th>
-      <th>Edit</th>
-    </tr>
+<div class="serviceTable">
+  <h3>Update your services</h3>
+  <table datatable class="row-border hover" id="serviceTable">
+    <thead>
+      <tr>
+        <th>Service</th>
+        <th>Time</th>
+        <th>Price</th>
+        <th>Edit</th>
+      </tr>
 
-  </thead>
-  <tbody>
-    <tr *ngFor="let s of service">
-      <td> {{s.descriptionService}}</td>
-      <td> {{s.duration}}</td>
-      <td> {{s.price}}</td>
-      <td>
-        <button class="btn btn-success" data-toggle="modal" data-target="#myModal" (click)=editService(s)>Update </button>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of service">
+        <td> {{s.descriptionService}}</td>
+        <td> {{s.duration}}</td>
+        <td> {{s.price}}</td>
+        <td>
+          <button class="btn btn-success" data-toggle="modal" data-target="#myModal" (click)=editService(s)>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          </button>
 
-      </td>
-    </tr>
-  </tbody>
-</table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <div class="editAllServices">
 
@@ -279,30 +294,32 @@
         <!-- Modal body -->
         <div class="modal-body">
           <form id="serviceForm" [formGroup]="serviceForm">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+            <div class="input-group" [ngClass]="{'has-error':!serviceForm.controls['descriptionService'].valid && serviceForm.controls['descriptionService'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-info-circle fa-fw"></i>
               </span>
-              <input id="Name" type="text" class="form-control" placeholder="Description service" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['descriptionService']"
+              <input id="dscr" type="text" class="form-control" placeholder="Description service" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['descriptionService']"
               />
             </div>
-            <br>
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+            <div *ngIf="serviceForm.controls['descriptionService'].hasError('required') && serviceForm.controls['descriptionService'].touched"
+              class="alert alert-danger">You must include a description service`s.</div>
+
+            <div class="input-group" [ngClass]="{'has-error':!serviceForm.controls['duration'].valid && serviceForm.controls['duration'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-clock-o fa-fw"></i>
               </span>
-              <input id="Surname" type="text" class="form-control" placeholder="Duration" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['duration']"
+              <input id="duration" type="text" class="form-control" placeholder="Duration" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['duration']"
               />
             </div>
-            <br>
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">
-                <span class="ui-icon ui-icon-arrowthick-1-n"></span>
+            <div *ngIf="serviceForm.controls['duration'].hasError('required') && serviceForm.controls['duration'].touched" class="alert alert-danger">You must include a duration service`s.</div>
+            <div class="input-group" [ngClass]="{'has-error':!serviceForm.controls['price'].valid && serviceForm.controls['price'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-usd fa-fw"></i>
               </span>
-              <input id="Email" type="email" class="form-control" placeholder="Price" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['price']"
+              <input id="price" type="number" class="form-control" placeholder="Price" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['price']"
               />
             </div>
-            <br>
+            <div *ngIf="serviceForm.controls['price'].hasError('required') && serviceForm.controls['price'].touched" class="alert alert-danger">You must include a price service`s.</div>
           </form>
 
         </div>

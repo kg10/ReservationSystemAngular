@@ -25,6 +25,10 @@ import { MatTableModule } from '@angular/material/table';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { DataTablesModule } from 'angular-datatables';
 import { AdminHistoryComponent } from './admin-history/admin-history.component';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { GrowlModule } from 'primeng/primeng';
+import { PasswordModule } from 'primeng/primeng';
+import {CalendarModule} from 'primeng/primeng';
 
 
 const appRoutes: Routes = [
@@ -98,6 +102,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
+    RecaptchaModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -110,8 +115,11 @@ const appRoutes: Routes = [
     MatRadioModule,
     MatTableModule,
     Ng2SmartTableModule,
-    DataTablesModule
-    
+    DataTablesModule,
+    GrowlModule,
+    PasswordModule,
+    CalendarModule
+
   ],
   providers: [AuthGuard, AuthUserGuard], // tutaj bylo pusto
   bootstrap: [AppComponent] // CrudPerson 

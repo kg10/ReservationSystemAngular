@@ -7,7 +7,6 @@ export class AuthUserGuard implements CanActivate {
   constructor(private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    //this.router.navigate(['/home']);
     let role: string = localStorage.getItem("role"); 
     console.log(role);
     if(role === '"USER"')

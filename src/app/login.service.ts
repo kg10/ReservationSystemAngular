@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { TimeRequest } from './model/timeRequest.model';
 import { Assign } from './model/listOfAssign.model';
 import { HistoryAllReservation } from './model/historyAllReservation.model';
+import { RegistrationAddress } from './model/registrationAddress.model';
 
 @Injectable()
 export class HttpService {
@@ -104,6 +105,12 @@ export class HttpService {
 
 
     register(url: string, reg: Registration): Observable<Registration> {
+        return this._http
+            .post(url, reg)
+            .map(this.extractData);
+    }
+
+    registerAddress(url: string, reg: RegistrationAddress): Observable<RegistrationAddress> {
         return this._http
             .post(url, reg)
             .map(this.extractData);

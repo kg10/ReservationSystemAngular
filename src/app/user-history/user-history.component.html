@@ -1,27 +1,30 @@
+<div class="historyUser">
+  <h3>Your history reservation</h3>
+  <table datatable class="row-border hover" id="history" cellspacing="0" width="90%">
+    <thead>
+      <tr>
+        <th>Service</th>
+        <th>Service`s person</th>
+        <th>Status</th>
+        <th>Time</th>
+        <th>Date</th>
+        <th>Delete</th>
+      </tr>
 
-<h1>Your history reservation</h1>
-<!-- <input type="text" id="findPerson" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"> -->
-<table datatable class="row-border hover" id="history" cellspacing="0" width="90%">
-  <thead>
-    <tr>
-      <th>Service</th>
-      <th>Service`s person</th>
-      <th>Status</th>
-      <th>Time</th>
-      <th>Date</th>
-      <th>Delete</th>
-    </tr>
-
-  </thead>
-  <tbody>
-    <tr *ngFor="let h of history" > <!--(click)="getPersonId(p.id)" -->
-      <td> {{h.service}}</td>
-      <td> {{h.personnel}}</td>
-      <td> {{h.status}}</td>
-      <td> {{h.timeFrom}}</td>
-      <td> {{h.date}}</td>
-      <td><button class="btn btn-danger" (click)=deleteReservation(h.id)> X</button></td>
-    </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <tr *ngFor="let h of history">
+        <!--(click)="getPersonId(p.id)" -->
+        <td> {{h.service}}</td>
+        <td> {{h.personnel}}</td>
+        <td> {{h.status}}</td>
+        <td> {{h.timeFrom}}</td>
+        <td> {{h.date}}</td>
+        <td>
+          <button class="btn btn-danger" (click)=deleteReservation(h.id)> X</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <router-outlet></router-outlet>

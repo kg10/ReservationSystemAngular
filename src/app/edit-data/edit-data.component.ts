@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm } from "@angular/forms";
+import { FormBuilder, FormGroup, NgForm, Validators } from "@angular/forms";
 import { HttpService } from "../login.service";
 import { Personnel } from "../model/personnel.model";
 import { Service } from "../model/service.model";
@@ -36,27 +36,28 @@ export class EditDataComponent implements OnInit {
   //dataSource = new MatTableModule;
 
   constructor(fb: FormBuilder, private _httpService: HttpService) {
-    this.urlName = "http://localhost:8072";
+    // this.urlName = "http://localhost:8072";
+    this.urlName = "http://192.168.99.100:8073/api";
     this.serviceForm = fb.group({
       'id': '',
-      'descriptionService': '',
-      'duration': '',
-      'price': '',
+      'descriptionService': [null, Validators.required],
+      'duration': [null, Validators.required],
+      'price': [null, Validators.required],
     });
     this.personnelForm = fb.group({
       'id': '',
-      'firstName': '',
-      'lastName': '',
-      'descriptionPerson': '',
+      'firstName': [null, Validators.required],
+      'lastName': [null, Validators.required],
+      'descriptionPerson': [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(255)])],
       'active': '',
     });
     this.serviceNameForm = fb.group({
-      'dscr': ''
+      'dscr': [null, Validators.required],
     })
     this.timeForm = fb.group({
-      'day': '',
-      'timeFrom': '',
-      'timeTo': '',
+      'day': [null, Validators.required],
+      'timeFrom': [null, Validators.required],
+      'timeTo': [null, Validators.required],
     });
   }
 
@@ -65,16 +66,8 @@ export class EditDataComponent implements OnInit {
   ngOnInit() {
     this.findAllService();
     this.findAllPersonnel();
-    this.newAlert('danger', 'alert wyskakuje');
-
   }
 
-  newAlert(type: string, message: string) {
-    this.alert = {
-      type: type,
-      message: message
-    }
-  }
 
   findAllPersonnel() {
     this._httpService

@@ -12,42 +12,63 @@ import { FormControl, Validators } from '@angular/forms';
 import { ReservationResponse } from "../model/reservation.response";
 import { Reservation } from '../model/reservation.model';
 import { Router } from '@angular/router';
+import { Message } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 
 @Component({
     selector: 'loginForm',
     templateUrl: './loginForm.html',
-    // styleUrls: ['./login.css'],
-    providers: [HttpService],
+    styleUrls: ['./login.css'],
+    providers: [HttpService, MessageService],
 })
 export class LoginForm implements OnInit {
     loginForm: FormGroup;
     registerForm: FormGroup;
+    addressForm: FormGroup;
     urlName: String;
     isValid: boolean;
     role: String;
+    msgs: Message[] = [];
+    toggleButton: boolean = true;
+    id: any;
 
     ngOnInit() {
         window.alert = function alert(msg) {
             console.log('Hidden Alert ' + msg);
         };
+
     }
 
-    constructor(fb: FormBuilder, private _httpService: HttpService, private router: Router) {
+    constructor(private messageService: MessageService, fb: FormBuilder, private _httpService: HttpService, private router: Router) {
         this.loginForm = fb.group({
-            'login': '',
-            'password': '',
+            'login': [null, Validators.required],
+            'password': [null, Validators.required],
             'descriptionPerson': '',
         });
         this.registerForm = fb.group({
-            'login': '',
-            'password': '',
-            'email': ['', [Validators.required, Validators.email]],
-            'firstName': '',
-            'lastName': '',
+            'login': [null, Validators.required],
+            'password': [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(15)])],
+            'email': [null, Validators.compose([Validators.email, Validators.required])],
+            'firstName': [null, Validators.required],
+            'lastName': [null, Validators.required],
         })
 
-        this.urlName = "http://localhost:8072";
+        this.addressForm = fb.group({
+            'city': [null, Validators.required],
+            'street': [null, Validators.required],
+            'numberStreet': [null, Validators.required],
+            'postalCode': [null, Validators.required],
+            'personnelId': [null],
+        })
+
+        // this.urlName = "http://localhost:8072";
+        this.urlName = "http://192.168.99.100:8073/api";
+
+    }
+
+    showAlert(type: string, text: string) {
+        this.messageService.add({ severity: type, summary: 'Error', detail: text });
     }
 
     isValidForm() {
@@ -67,7 +88,10 @@ export class LoginForm implements OnInit {
                     this.role = value,
                     localStorage.setItem("role", JSON.stringify(this.role))
             },
-            error => alert(error),
+            error => {
+                alert(error),
+                    this.showAlert("error", "Invalid password or user doesn`t exist")
+            },
             () => console.log("Finished")
             )
     }
@@ -77,12 +101,35 @@ export class LoginForm implements OnInit {
             .register(this.urlName + "/reg/register", this.registerForm.value)
             .subscribe(
             value => {
+                //this.showAlert("success", "User " + this.registerForm.value.login + " has been registered."),
                 this.registerForm.reset(),
+                    this.id = value,
+                    this.addressForm.value.personnelId = this.id,
+                    this.registerAddress()
+            },
+            error => alert(error),
+            () => console.log("Finished"),
+        )
+    }
+
+    registerAddress() {
+        console.log("wyslanie adresu: " + this.addressForm.value.personnelId)
+        this._httpService
+            .registerAddress(this.urlName + "/addAddress", this.addressForm.value)
+            .subscribe(
+            value => {
+                this.showAlert("success", "User " + this.registerForm.value.login + " has been registered."),
+                    this.addressForm.reset(),
                     value = value
             },
             error => alert(error),
             () => console.log("Finished"),
         )
+    }
+
+    resolved(captchaResponse: string) {
+        //console.log(`Resolved captcha with response ${captchaResponse}:`);
+        this.toggleButton = false;
     }
 
 }

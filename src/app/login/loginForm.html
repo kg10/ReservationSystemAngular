@@ -1,112 +1,151 @@
+<p-growl [(value)]="msgs">
+</p-growl>
+<h1>Reservation system</h1>
+<div class="body">
+    <form id="loginForm" class="login-form" [formGroup]="loginForm" (ngSubmit)="signIn(loginForm.value)" data-toggle="validator">
+        <div class="input-group" [ngClass]="{'has-error':!loginForm.controls['login'].valid && loginForm.controls['login'].touched}">
+            <span class="input-group-addon">
+                <i class="fa fa-user fa-fw"></i>
+            </span>
+            <input id="login" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" [formControl]="loginForm.controls['login']"
+            />
+        </div>
+        <div *ngIf="loginForm.controls['login'].hasError('required') && loginForm.controls['login'].touched" class="alert alert-danger">You must include a login</div>
 
- 
-<form id="loginForm" [formGroup]="loginForm" (ngSubmit)="signIn(loginForm.value)" data-toggle="validator">
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-            <span class="ui-icon ui-icon-arrowthick-1-n"></span>
-        </span>
-        <input id="login" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" [formControl]="loginForm.controls['login']"
-        />
-    </div>
-    <br>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-            <i class="glyphicon glyphicon-lock"></i>
-        </span>
-        <input id="password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" [formControl]="loginForm.controls['password']">
+        <div class="input-group" [ngClass]="{'has-error':!loginForm.controls['password'].valid && loginForm.controls['password'].touched}">
+            <span class="input-group-addon">
+                <i class="fa fa-key fa-fw"></i>
+            </span>
 
-    </div>
-    <br>
-    <!-- <a [routerLink]="['../nav/reservation']"> -->
-        <button type="submit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-user"></span> Sign in</button>
-    <!-- </a> -->
+            <input id="password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" [formControl]="loginForm.controls['password']">
+        </div>
+        <div *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched" class="alert alert-danger">You must include a password</div>
 
-    <div class="registration">
+        <re-captcha (resolved)="resolved($event)" siteKey="6LclBSwUAAAAAFbqTk8wnp0qsMNoon6H5JTe-Uc2"></re-captcha>
 
-        <!-- Button to Open the Modal -->
-        <button type="button" class="btn btn-secondary" [disabled]="!isValidForm()" data-toggle="modal" data-target="#myModal"> Register </button>
-
-        <!-- The Modal -->
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Registration</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <form id="registerForm" [formGroup]="registerForm">
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">
-                                    <span class="ui-icon ui-icon-arrowthick-1-n"></span>
-                                </span>
-                                <input id="Name" type="text" class="form-control" placeholder="Name" aria-describedby="basic-addon1" [formControl]="registerForm.controls['firstName']"
-                                />
-                            </div>
-                            <br>
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">
-                                    <span class="ui-icon ui-icon-arrowthick-1-n"></span>
-                                </span>
-                                <input id="Surname" type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1" [formControl]="registerForm.controls['lastName']"
-                                />
-                            </div>
-                            <br>
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">
-                                    <span class="ui-icon ui-icon-arrowthick-1-n"></span>
-                                </span>
-                                <input id="Email" type="email" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [formControl]="registerForm.controls['email']"
-                                />
-                            </div>
-                            <br>
-                            <!-- <mat-form-field>
-                  <input matInput placeholder="Enter your email" [formControl]="registerForm.controls['email']" required>
-                   <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> 
-                </mat-form-field>
-                <div [hidden]="email.valid">Invalid</div> -->
-
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">
-                                    <span class="ui-icon ui-icon-arrowthick-1-n"></span>
-                                </span>
-                                <input id="Login" type="text" class="form-control" placeholder="Login" aria-describedby="basic-addon1" [formControl]="registerForm.controls['login']"
-                                />
-                            </div>
-                            <br>
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">
-                                    <span class="ui-icon ui-icon-arrowthick-1-n"></span>
-                                </span>
-                                <input id="Password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" [formControl]="registerForm.controls['password']"
-                                />
-                            </div>
-                            <br>
-
-                        </form>
-
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" (click)="register(registerForm.value)">
-                            <span class="glyphicon glyphicon-user"></span> Register</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-
-                </div>
-            </div>
+        <div class="buttons" style="display: inline;">
+            <button type="submit" class="btn btn-primary" [disabled]='toggleButton && !loginForm.valid'>
+                <span class="glyphicon glyphicon-user"></span> Sign in</button>
+            <button type="button" class="btn btn-secondary" [disabled]="!isValidForm()" data-toggle="modal" data-target="#myModal"> Register </button>
         </div>
 
-    </div>
-    <br>
-    <br>
-    <br>
-</form>
+        <div class="registration">
 
+            <!-- Button to Open the Modal -->
+
+
+            <!-- The Modal -->
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Registration</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form id="registerForm" [formGroup]="registerForm" class="register-form">
+                                <div class="input-group" [ngClass]="{'has-error':!registerForm.controls['firstName'].valid && registerForm.controls['firstName'].touched}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-address-card fa-fw"></i>
+                                    </span>
+                                    <input id="Name" type="text" class="form-control" placeholder="Name" aria-describedby="basic-addon1" [formControl]="registerForm.controls['firstName']"
+                                    />
+                                </div>
+                                <div *ngIf="registerForm.controls['firstName'].hasError('required') && registerForm.controls['firstName'].touched" class="alert alert-danger">You must include a first name</div>
+
+                                <div class="input-group" [ngClass]="{'has-error':!registerForm.controls['lastName'].valid && registerForm.controls['lastName'].touched}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-address-card fa-fw"></i>
+                                    </span>
+                                    <input id="Surname" type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1" [formControl]="registerForm.controls['lastName']"
+                                    />
+                                </div>
+                                <div *ngIf="registerForm.controls['lastName'].hasError('required') && registerForm.controls['lastName'].touched" class="alert alert-danger">You must include a surname</div>
+
+                                <div class="input-group" [ngClass]="{'has-error':!registerForm.controls['email'].valid && registerForm.controls['email'].touched}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope fa-fw"></i>
+                                    </span>
+                                    <input id="Email" type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [formControl]="registerForm.controls['email']"
+                                    />
+                                </div>
+                                <div *ngIf="registerForm.controls['email'].hasError('required') && registerForm.controls['email'].touched" class="alert alert-danger">You must include an e-mail</div>
+                                <div *ngIf="registerForm.controls['email'].hasError('email') && registerForm.controls['email'].touched" class="alert alert-danger">Invalid address e-mail</div>
+
+                                <div class="input-group" [ngClass]="{'has-error':!registerForm.controls['login'].valid && registerForm.controls['login'].touched}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user fa-fw"></i>
+                                    </span>
+                                    <input id="Login" type="email" class="form-control" placeholder="Login" aria-describedby="basic-addon1" [formControl]="registerForm.controls['login']"
+                                    />
+                                </div>
+                                <div *ngIf="registerForm.controls['login'].hasError('required') && registerForm.controls['login'].touched" class="alert alert-danger">You must include a login</div>
+
+                                <div class="input-group" [ngClass]="{'has-error':!registerForm.controls['password'].valid && registerForm.controls['password'].touched}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-key fa-fw"></i>
+                                    </span>
+                                    <input pPassword id="Password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1"
+                                        [formControl]="registerForm.controls['password']" />
+                                </div>
+                                <div *ngIf="registerForm.controls['password'].hasError('required') && registerForm.controls['password'].touched" class="alert alert-danger">You must include a password</div>
+
+                                <div class="input-group" [ngClass]="{'has-error':!addressForm.controls['city'].valid && addressForm.controls['city'].touched}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user fa-fw"></i>
+                                    </span>
+                                    <input id="City" type="text" class="form-control" placeholder="City" aria-describedby="basic-addon1" [formControl]="addressForm.controls['city']"
+                                    />
+                                </div>
+                                <div *ngIf="addressForm.controls['city'].hasError('required') && addressForm.controls['city'].touched" class="alert alert-danger">You must include a city</div>
+
+                                <div class="input-group" [ngClass]="{'has-error':!addressForm.controls['street'].valid && addressForm.controls['street'].touched}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user fa-fw"></i>
+                                    </span>
+                                    <input id="Street" type="text" class="form-control" placeholder="Street" aria-describedby="basic-addon1" [formControl]="addressForm.controls['street']"
+                                    />
+                                </div>
+                                <div *ngIf="addressForm.controls['street'].hasError('required') && addressForm.controls['street'].touched" class="alert alert-danger">You must include a street name</div>
+
+                                <div class="input-group" [ngClass]="{'has-error':!addressForm.controls['numberStreet'].valid && addressForm.controls['numberStreet'].touched}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user fa-fw"></i>
+                                    </span>
+                                    <input id="Number street" type="number" class="form-control" placeholder="Number street" aria-describedby="basic-addon1"
+                                        [formControl]="addressForm.controls['numberStreet']" />
+                                </div>
+                                <div *ngIf="addressForm.controls['numberStreet'].hasError('required') && addressForm.controls['numberStreet'].touched" class="alert alert-danger">You must include a number street</div>
+
+                                <div class="input-group" [ngClass]="{'has-error':!addressForm.controls['postalCode'].valid && addressForm.controls['postalCode'].touched}">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user fa-fw"></i>
+                                    </span>
+                                    <input id="Postal code" type="text" class="form-control" placeholder="Postal code" aria-describedby="basic-addon1" [formControl]="addressForm.controls['postalCode']"
+                                    />
+                                </div>
+                                <div *ngIf="addressForm.controls['postalCode'].hasError('required') && addressForm.controls['postalCode'].touched" class="alert alert-danger">You must include a postal code</div>
+
+                            </form>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" (click)="register(registerForm.value)" data-dismiss="modal" [disabled]="!registerForm.valid">
+                                <span class="glyphicon glyphicon-user"></span> Register</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
 <router-outlet></router-outlet>

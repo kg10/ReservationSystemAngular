@@ -5,9 +5,9 @@
     font-size: 18px;
     line-height: 1.33;
     border-radius: 25px;
-  }
+}
 
-  .btn-circle.btn-sm {
+.btn-circle.btn-sm {
     width: 30px;
     height: 30px;
     text-align: center;
@@ -15,4 +15,58 @@
     font-size: 12px;
     line-height: 1.428571429;
     border-radius: 15px;
-  }
+}
+
+.serviceForm{
+    margin-top: 3%;
+    margin-left: 25%;
+    margin-bottom: 5%;
+    width: 50%; 
+    position: relative;
+    padding: 5%;
+    -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+}
+
+.personForm{
+    margin-top: 3%;
+    margin-left: 25%;
+    width: 50%; 
+    position: relative;
+    padding: 5%;
+    -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.75);
+}
+
+.input-group{
+    margin-bottom: 2%;
+}
+
+.personForm .buttons{
+    margin-left: 68.8%;
+}
+
+.serviceForm button{
+    margin-left: 77%;
+}
+
+.alert {
+    margin-top: -2%;
+    font-size: 11px;
+}
+
+h3 {
+  text-align: center;
+  font-family: Lucida, cursive;
+  margin-top: -5%;  
+  margin-bottom: 3%;
+}
+
+h4{
+  text-align: center;
+  font-family: Lucida, cursive;
+  margin-top: -5%;  
+  margin-bottom: 3%;
+}
