@@ -2,8 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LoginForm } from './login/loginForm.component';
 import { AppComponent } from './app.component';
-import { CrudPerson } from './crud.component';
-import { Login } from './login.component';
+import { Login } from './reservation/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,7 +13,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { AuthGuard } from './auth-guard/auth.guard';
 import { Routes, RouterModule } from '@angular/router';
-import { MyComponent } from './tmp.component';
 import { UserHistoryComponent } from './user-history/user-history.component';
 import { NavUserComponent } from './nav-user/nav-user.component';
 import { AuthUserGuard } from './auth-guard/auth-user.guard';
@@ -89,9 +87,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    CrudPerson,
     Login,
-    MyComponent,
     LoginForm,
     UserHistoryComponent,
     NavUserComponent,

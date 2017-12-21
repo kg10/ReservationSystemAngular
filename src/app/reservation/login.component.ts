@@ -1,16 +1,16 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { HttpService } from "./login.service";
+import { HttpService } from "../login.service";
 import { NgForm } from '@angular/forms';
-import { Personnel } from "./model/personnel.model";
-import { Service } from "./model/service.model";
-import { Search } from "./model/search.model";
+import { Personnel } from "../model/personnel.model";
+import { Service } from "../model/service.model";
+import { Search } from "../model/search.model";
 import { last } from 'rxjs/operator/last';
-import { TimeTable } from "./model/timeTable.model";
-import { Registration } from "./model/registration.model";
+import { TimeTable } from "../model/timeTable.model";
+import { Registration } from "../model/registration.model";
 import { FormControl, Validators } from '@angular/forms';
-import { ReservationResponse } from "./model/reservation.response";
-import { Reservation } from './model/reservation.model';
+import { ReservationResponse } from "../model/reservation.response";
+import { Reservation } from '../model/reservation.model';
 import { Router } from '@angular/router';
 
 @Component({
