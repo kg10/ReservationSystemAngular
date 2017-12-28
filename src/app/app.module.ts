@@ -18,7 +18,7 @@ import { NavUserComponent } from './nav-user/nav-user.component';
 import { AuthUserGuard } from './auth-guard/auth-user.guard';
 import { NavAdminComponent } from './nav-admin/nav-admin.component';
 import { EditDataComponent } from './edit-data/edit-data.component';
-import { AllDataComponent } from './all-data/all-data.component';
+import { AllDataComponent } from './add-data/all-data.component';
 import { MatTableModule } from '@angular/material/table';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { DataTablesModule } from 'angular-datatables';

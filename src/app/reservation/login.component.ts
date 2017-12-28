@@ -66,7 +66,8 @@ export class Login implements OnInit {
             'lastName': '',
         })
 
-        this.urlName = "http://localhost:8072";
+        // this.urlName = "http://localhost:8072";
+        this.urlName = "http://192.168.99.100:8073/api";
         this.select = this.valIdPerson = this.valIdService = 0;
 
     }

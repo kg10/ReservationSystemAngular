@@ -16,6 +16,8 @@ import { TimeRequest } from './model/timeRequest.model';
 import { Assign } from './model/listOfAssign.model';
 import { HistoryAllReservation } from './model/historyAllReservation.model';
 import { RegistrationAddress } from './model/registrationAddress.model';
+import { Client } from './model/client.model';
+import { Address } from './model/address.model';
 
 @Injectable()
 export class HttpService {
@@ -67,6 +69,20 @@ export class HttpService {
     // }
 
     getService(url: string): Observable<Service> {
+        let storedToken: string = localStorage.getItem("headers");
+        return this._http
+            .get(url, { headers: JSON.parse(storedToken) })
+            .map(res => res.json());
+    }
+
+    getClient(url: string): Observable<Client> {
+        let storedToken: string = localStorage.getItem("headers");
+        return this._http
+            .get(url, { headers: JSON.parse(storedToken) })
+            .map(res => res.json());
+    }
+
+    getAddress(url: string): Observable<Address> {
         let storedToken: string = localStorage.getItem("headers");
         return this._http
             .get(url, { headers: JSON.parse(storedToken) })

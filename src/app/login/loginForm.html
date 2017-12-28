@@ -96,7 +96,7 @@
 
                                 <div class="input-group" [ngClass]="{'has-error':!addressForm.controls['city'].valid && addressForm.controls['city'].touched}">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-user fa-fw"></i>
+                                            <i class="fa fa-home fa-fw" aria-hidden="true"></i>
                                     </span>
                                     <input id="City" type="text" class="form-control" placeholder="City" aria-describedby="basic-addon1" [formControl]="addressForm.controls['city']"
                                     />
@@ -105,7 +105,7 @@
 
                                 <div class="input-group" [ngClass]="{'has-error':!addressForm.controls['street'].valid && addressForm.controls['street'].touched}">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-user fa-fw"></i>
+                                            <i class="fa fa-road fa-fw" aria-hidden="true"></i>
                                     </span>
                                     <input id="Street" type="text" class="form-control" placeholder="Street" aria-describedby="basic-addon1" [formControl]="addressForm.controls['street']"
                                     />
@@ -114,7 +114,7 @@
 
                                 <div class="input-group" [ngClass]="{'has-error':!addressForm.controls['numberStreet'].valid && addressForm.controls['numberStreet'].touched}">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-user fa-fw"></i>
+                                            <i class="fa fa-street-view fa-fw" aria-hidden="true"></i>
                                     </span>
                                     <input id="Number street" type="number" class="form-control" placeholder="Number street" aria-describedby="basic-addon1"
                                         [formControl]="addressForm.controls['numberStreet']" />
@@ -123,7 +123,7 @@
 
                                 <div class="input-group" [ngClass]="{'has-error':!addressForm.controls['postalCode'].valid && addressForm.controls['postalCode'].touched}">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-user fa-fw"></i>
+                                            <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
                                     </span>
                                     <input id="Postal code" type="text" class="form-control" placeholder="Postal code" aria-describedby="basic-addon1" [formControl]="addressForm.controls['postalCode']"
                                     />

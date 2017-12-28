@@ -11,7 +11,8 @@ export class UserHistoryComponent implements OnInit {
   urlName: String;
   history: HistoryReservation[];
   constructor(private _httpService: HttpService) {
-    this.urlName = "http://localhost:8072";
+    // this.urlName = "http://localhost:8072";
+    this.urlName = "http://192.168.99.100:8073/api";
   }
 
   ngOnInit() {

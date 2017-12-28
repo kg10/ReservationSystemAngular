@@ -13,7 +13,8 @@ export class AdminHistoryComponent implements OnInit {
   urlName: String;
   hist: HistoryAllReservation[];
   constructor(private _httpService: HttpService) {
-    this.urlName = "http://localhost:8072";
+    // this.urlName = "http://localhost:8072";
+    this.urlName = "http://192.168.99.100:8073/api";
   }
 
   ngOnInit() {

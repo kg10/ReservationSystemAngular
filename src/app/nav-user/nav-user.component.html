@@ -6,6 +6,9 @@
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/nav/userHistory']">History</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="modal" data-target="#modalData" (click)=selectClientData()>Edit data</a>
+    </li>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
         <i class="fa fa-user-circle-o" aria-hidden="true"></i> {{loginSave}}
@@ -18,5 +21,100 @@
     </li>
   </ul>
 </nav>
+
+<div class="modalData">
+
+  <div class="modal fade" id="modalData">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Edit person</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form id="clientForm" [formGroup]="clientForm">
+            <div class="input-group" [ngClass]="{'has-error':!clientForm.controls['firstName'].valid && clientForm.controls['firstName'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-user fa-fw"></i>
+              </span>
+              <input id="Name" type="text" class="form-control" placeholder="Name" aria-describedby="basic-addon1" [formControl]="clientForm.controls['firstName']"
+              />
+            </div>
+            <div *ngIf="clientForm.controls['firstName'].hasError('required') && clientForm.controls['firstName'].touched" class="alert alert-danger">You must include a name.</div>
+
+            <div class="input-group" [ngClass]="{'has-error':!clientForm.controls['lastName'].valid && clientForm.controls['lastName'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-user fa-fw"></i>
+              </span>
+              <input id="Surname" type="text" class="form-control" placeholder="Surname" aria-describedby="basic-addon1" [formControl]="clientForm.controls['lastName']"
+              />
+            </div>
+            <div *ngIf="clientForm.controls['lastName'].hasError('required') && clientForm.controls['lastName'].touched" class="alert alert-danger">You must include a surname.</div>
+
+            <div class="input-group" [ngClass]="{'has-error':!clientForm.controls['email'].valid && clientForm.controls['email'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-info-circle fa-fw"></i>
+              </span>
+              <input id="Email" type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1" [formControl]="clientForm.controls['email']"
+              />
+            </div>
+            <div *ngIf="clientForm.controls['email'].hasError('required') && clientForm.controls['email'].touched" class="alert alert-danger">You must include a e-mail.</div>
+
+            <div class="input-group" [ngClass]="{'has-error':!clientForm.controls['city'].valid && clientForm.controls['city'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-home fa-fw" aria-hidden="true"></i>
+              </span>
+              <input id="city" type="text" class="form-control" placeholder="City" aria-describedby="basic-addon1" [formControl]="clientForm.controls['city']"
+              />
+            </div>
+            <div *ngIf="clientForm.controls['city'].hasError('required') && clientForm.controls['city'].touched" class="alert alert-danger">You must include a city.</div>
+
+            <div class="input-group" [ngClass]="{'has-error':!clientForm.controls['postalCode'].valid && clientForm.controls['postalCode'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+              </span>
+              <input id="postalCode" type="text" class="form-control" placeholder="Postal code" aria-describedby="basic-addon1" [formControl]="clientForm.controls['postalCode']"
+              />
+            </div>
+            <div *ngIf="clientForm.controls['postalCode'].hasError('required') && clientForm.controls['postalCode'].touched" class="alert alert-danger">You must include a postal code.</div>
+
+            <div class="input-group" [ngClass]="{'has-error':!clientForm.controls['street'].valid && clientForm.controls['street'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-road fa-fw" aria-hidden="true"></i>
+              </span>
+              <input id="street" type="text" class="form-control" placeholder="Street" aria-describedby="basic-addon1" [formControl]="clientForm.controls['street']"
+              />
+            </div>
+            <div *ngIf="clientForm.controls['street'].hasError('required') && clientForm.controls['street'].touched" class="alert alert-danger">You must include a street.</div>
+
+            <div class="input-group" [ngClass]="{'has-error':!clientForm.controls['numberStreet'].valid && clientForm.controls['numberStreet'].touched}">
+              <span class="input-group-addon">
+                <i class="fa fa-street-view fa-fw" aria-hidden="true"></i>
+              </span>
+              <input id="numberStreet" type="number" class="form-control" placeholder="Street number" aria-describedby="basic-addon1" [formControl]="clientForm.controls['numberStreet']"
+              />
+            </div>
+            <div *ngIf="clientForm.controls['numberStreet'].hasError('required') && clientForm.controls['numberStreet'].touched" class="alert alert-danger">You must include a street number.</div>
+
+          </form>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="editData()" data-dismiss="modal" [disabled]="!clientForm.valid">
+            <span class="glyphicon glyphicon-user"></span> Edit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
 
 <router-outlet></router-outlet>
