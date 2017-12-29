@@ -12,12 +12,14 @@ import { FormControl, Validators } from '@angular/forms';
 import { ReservationResponse } from "../model/reservation.response";
 import { Reservation } from '../model/reservation.model';
 import { Router } from '@angular/router';
+import { Message } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
     selector: 'login',
     templateUrl: './login.html',
     styleUrls: ['./login.css'],
-    providers: [HttpService],
+    providers: [HttpService, MessageService],
 })
 export class Login implements OnInit {
     @HostListener("window:beforeunload", ["$event"])
@@ -39,7 +41,6 @@ export class Login implements OnInit {
     timeTable: TimeTable[] = [];
     ifCheck = new String("");
     date: String;
-    //list: string[] = ["12:00", "12:15", "12:30", "12:45", "13:00", "13:15"];
     userList: Array<TimeTable> = new Array<TimeTable>();
     times: String[] = [];
     reserv: ReservationResponse = {} as any;
@@ -48,9 +49,10 @@ export class Login implements OnInit {
     today = new Date().toJSON().split('T')[0];
     rememberTime: any;
     timeInput: any = '';
+    msgs: Message[] = [];
 
 
-    constructor(fb: FormBuilder, private _httpService: HttpService, private router: Router) {
+    constructor(fb: FormBuilder, private _httpService: HttpService, private router: Router, private messageService: MessageService,) {
         //localStorage.clear();
         this.dt = new Date();
         this.loginForm = fb.group({
@@ -72,16 +74,9 @@ export class Login implements OnInit {
 
     }
 
-    // signIn(form: NgForm) {
-    //     console.log(this.loginForm.value.password);
-    // }
-    //email = new FormControl('', [Validators.required, Validators.email]);
-
-    //   getErrorMessage() {
-    //     return this.email.hasError('required') ? 'You must enter a value' :
-    //         this.email.hasError('email') ? 'Not a valid email' :
-    //             '';
-    //   }
+    showAlert(type: string, text: string, ) {
+        this.messageService.add({ severity: type, summary: type, detail: text });
+    }
 
     ngOnInit() {
         this.findAllPersonnel();
@@ -104,7 +99,7 @@ export class Login implements OnInit {
         this.reserv.loginClient = localStorage.getItem("login");
 
         this.reservation(this.reserv);
-        this.valIdPerson = this.valIdService = this.rememberTime = this.date = this.reser = null;
+        // this.valIdPerson = this.valIdService = this.rememberTime = this.date = this.reser = null;
     }
     submitt(date: any) {
         this.date = date.value;
@@ -151,6 +146,9 @@ export class Login implements OnInit {
                 value = value,
                     this.findAllPersonnel(),
                     this.findAllService()
+                    // this.valIdPerson = this.valIdService = this.rememberTime = this.date = this.reser = null,
+                    // this.reser=null,
+                    // this.reserv=null
 
             },
             error => alert(error),
@@ -214,7 +212,7 @@ export class Login implements OnInit {
 
         var flag: boolean = true;
         var i: number = 0;
-
+        this.times=[];
         this._httpService
             .getTimeTable(this.urlName + "/reg/getFreeTime?id=" + valIdPerson + "&date=" + date + "&idService=" + valIdService)
             .subscribe(
@@ -223,57 +221,42 @@ export class Login implements OnInit {
                 this.times = data,
                     this.times.forEach(element => {
                         console.log(element);
-
-                        //console.log("this: " + Number(this.from));
-                        //    this.to = new Date (element)
-                        //     if(element.timeFrom<element.timeTo){
-                        //         console.log("ok");
-                        //     }
-                        //     else{
-                        //         console.log("false");
-                        //     }
-
                     });
             },
-            error => alert(error),
+            error => {
+                alert(error),
+                this.showAlert("error", "This day is all busy");
+            },
             () => this.showTimes(),
 
         )
     }
 
-    // addMinutes(date, minutes) {
-    //     console.log(this.times[5]);
-    // }
-
     showTimes() {
         console.log(this.times[5]);
-        // for (i; i < this.userList.length; i++) {
-        //     console.log("asd" + this.userList[i]);
-        // }
+
     }
 
-    // parseUser(data) {
-    //     let user = new TimeTable(data.timeFrom, data.timeTo);
-    //     this.userList.push(user);
-    // }
-    getPersonId(id: any) {
-        console.log("personnel: " + id);
+    getPersonId(person: any) {
+        // console.log("personnel: " + person.id);
+        this.showAlert("success", "The person was selected  " + person.firstName + " " + person.lastName);
         if (this.select <= 0) {
-            this.findServiceByPersonnel(id);
+            this.findServiceByPersonnel(person.id);
             this.select = this.select - 1;
         }
-        this.valIdPerson = id;
+        this.valIdPerson = person.id;
         this.ifCheck = this.ifCheck + "0";
         this.getTimeTable()
     }
 
-    getServiceId(id: any) {
-        console.log("service" + id);
+    getServiceId(service: any) {
+        // console.log("service" + id);
+        this.showAlert("success", "The service was selected  " + service.descriptionService);
         if (this.select >= 0) {
-            this.findPersonnelByService(id);
+            this.findPersonnelByService(service.id);
             this.select = this.select + 1;
         }
-        this.valIdService = id;
+        this.valIdService = service.id;
         this.ifCheck = this.ifCheck + "1";
         this.getTimeTable()
     }

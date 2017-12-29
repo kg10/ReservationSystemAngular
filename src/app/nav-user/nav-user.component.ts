@@ -18,7 +18,8 @@ export class NavUserComponent implements OnInit {
   client: Client;
   address: Address;
   clientForm: FormGroup;
- // addressForm: FormGroup;
+  editClient: Client;
+  editAddress: Address;
 
   constructor(fb: FormBuilder, private router: Router, private _httpService: HttpService) {
     this.loginSave = localStorage.getItem("login");
@@ -28,19 +29,14 @@ export class NavUserComponent implements OnInit {
       'firstName': [null, Validators.required],
       'lastName': [null, Validators.required],
       'email': [null, Validators.required],
+      'idAddress' : [null],
       'city': [null, Validators.required],
       'street': [null, Validators.required],
       'postalCode': [null, Validators.required],
       'numberStreet': [null, Validators.required],
       'personnelId': [null, Validators.required],
     });
-    // this.addressForm = fb.group({
-    //   'city': [null, Validators.required],
-    //   'street': [null, Validators.required],
-    //   'postalCode': [null, Validators.required],
-    //   'numberStreet': [null, Validators.required],
-    //   'personnelId': [null, Validators.required],
-    // });
+
     this.urlName = "http://192.168.99.100:8073/api";
   }
 
@@ -69,9 +65,9 @@ export class NavUserComponent implements OnInit {
     this._httpService
       .getAddress(this.urlName + "/getAddress/" + id)
       .subscribe(
-      data =>{
+      data => {
         this.address = data,
-        this.parseToForm()
+          this.parseToForm()
       },
       error => alert(error),
       () => console.log("Finished"),
@@ -84,6 +80,7 @@ export class NavUserComponent implements OnInit {
       'firstName': this.client.firstName,
       'lastName': this.client.lastName,
       'email': this.client.email,
+      'idAddress' : this.address.id,
       'city': this.address.city,
       'street': this.address.street,
       'postalCode': this.address.postalCode,
@@ -92,8 +89,39 @@ export class NavUserComponent implements OnInit {
     })
   }
 
-  editData(){
+  parseToObject() {
+    this.editClient = new Client(this.clientForm.value.id, this.clientForm.value.firstName, this.clientForm.value.lastName, this.clientForm.value.email);
+    this.editAddress = new Address(this.clientForm.value.id, this.clientForm.value.city, this.clientForm.value.street, this.clientForm.value.numberStreet, this.clientForm.value.postalCode, this.clientForm.value.personnelId);
+  }
 
+  editData() {
+    this.parseToObject();
+    this.editDataClient();
+    this._httpService
+      .editAddress(this.urlName + "/updateAddress/" + this.clientForm.value.idAddress, this.clientForm.value)
+      .subscribe(
+      value => {
+        value = value
+      },
+      error => alert(error),
+      () => {
+        console.log("Finished")
+      }
+      )
+  }
+
+  editDataClient(){
+    this._httpService
+    .editClient(this.urlName + "/reg/updateClient/" + this.clientForm.value.id, this.clientForm.value)
+    .subscribe(
+    value => {
+      value = value
+    },
+    error => alert(error),
+    () => {
+      console.log("Finished")
+    }
+    )
   }
 
 }

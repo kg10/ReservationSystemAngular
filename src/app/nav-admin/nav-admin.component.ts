@@ -15,6 +15,7 @@ export class NavAdminComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.navigate(['/panel/edit']);
   }
 
   logOut() {

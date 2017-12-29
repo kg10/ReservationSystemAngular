@@ -237,6 +237,7 @@ export class EditDataComponent implements OnInit {
   }
 
   editOneService(registerForm: NgForm) {
+    this.serviceForm.value.duration+=":00";
     this._httpService
       .editService(this.urlName + "/reg/updateService", this.serviceForm.value)
       .subscribe(

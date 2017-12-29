@@ -113,7 +113,7 @@ export class LoginForm implements OnInit {
     }
 
     registerAddress() {
-        console.log("wyslanie adresu: " + this.addressForm.value.personnelId)
+        // console.log("wyslanie adresu: " + this.addressForm.value.personnelId)
         this._httpService
             .registerAddress(this.urlName + "/addAddress", this.addressForm.value)
             .subscribe(

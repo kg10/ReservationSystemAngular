@@ -7,6 +7,7 @@ import { Personnel } from "../model/personnel.model";
 import { TimeTable } from '../model/timeTable.model';
 import { TimeRequest } from '../model/timeRequest.model';
 import { MessageService } from 'primeng/components/common/messageservice';
+import { Message } from 'primeng/primeng';
 
 @Component({
   selector: 'app-all-data',
@@ -25,6 +26,7 @@ export class AllDataComponent implements OnInit {
   timeList: TimeTable[] = [];
   idPersonnel: any;
   timeRequest: TimeRequest;
+  msgs: Message[] = [];
   @Input('loginSave') loginSave: String;
 
   constructor(private messageService: MessageService, fb: FormBuilder, private _httpService: HttpService) {
@@ -53,7 +55,7 @@ export class AllDataComponent implements OnInit {
   }
 
   createService() {
-    this.serviceList.push(new Service(this.serviceForm.value.descriptionService, this.serviceForm.value.duration, this.serviceForm.value.price));
+    this.serviceList.push(new Service(this.serviceForm.value.descriptionService, this.serviceForm.value.duration+":00", this.serviceForm.value.price));
     console.log("time" + this.timeForm.value);
     this._httpService
       .createService(this.urlName + "/reg/addService", this.serviceList)

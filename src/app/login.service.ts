@@ -86,7 +86,8 @@ export class HttpService {
         let storedToken: string = localStorage.getItem("headers");
         return this._http
             .get(url, { headers: JSON.parse(storedToken) })
-            .map(res => res.json());
+            // .map(res => res.json());
+            .map(this.extractData);
     }
 
     getServiceTable(url: string): Observable<Service[]> {
@@ -159,6 +160,20 @@ export class HttpService {
         let storedToken: string = localStorage.getItem("headers");
         return this._http
             .put(url + "/" + service.id, service, { headers: JSON.parse(storedToken) })
+            .map(this.extractData);
+    }
+
+    editAddress(url: string, address: Address): Observable<Address> {
+        let storedToken: string = localStorage.getItem("headers");
+        return this._http
+            .put(url, address, { headers: JSON.parse(storedToken) })
+            .map(this.extractData);
+    }
+
+    editClient(url: string, client: Client): Observable<Client> {
+        let storedToken: string = localStorage.getItem("headers");
+        return this._http
+            .put(url, client, { headers: JSON.parse(storedToken) })
             .map(this.extractData);
     }
 

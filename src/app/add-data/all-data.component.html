@@ -4,7 +4,7 @@
 
 <div class="personForm">
   <h4>Add personel and his working time to system</h4>
-  <form id="personForm" [formGroup]="personForm" (ngSubmit)="createPerson(personForm.value)" data-toggle="validator">
+  <form id="personForm" [formGroup]="personForm" (ngSubmit)="createPerson()" data-toggle="validator">
     <div class="input-group" [ngClass]="{'has-error':!personForm.controls['firstName'].valid && personForm.controls['firstName'].touched}">
       <span class="input-group-addon">
         <i class="fa fa-user fa-fw"></i>
@@ -75,7 +75,7 @@
       <div class="ui-g-12 ui-md-4" [ngClass]="{'has-error':!timeForm.controls['timeTo'].valid && timeForm.controls['timeTo'].touched}">
         <h6>End time </h6>
         <!-- <p-calendar [formControl]="timeForm.controls['timeTo']" [timeOnly]="true"></p-calendar> -->
-        <input id="to" type="time" class="form-control" placeholder="Time end work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeTo']" min ="{{timeFrom}}">
+        <input id="to" type="time" class="form-control" placeholder="Time end work" aria-describedby="basic-addon1" [formControl]="timeForm.controls['timeTo']" > <!--min ="{{timeFrom}}"-->
         <div *ngIf="timeForm.controls['timeTo'].hasError('required') && timeForm.controls['timeTo'].touched" class="alert alert-danger">You must include a end time.</div>
       </div>
 
@@ -100,8 +100,8 @@
     <span class="input-group-addon">
       <i class="fa fa-clock-o fa-fw"></i>
     </span>
-    <!-- <input id="password" type="time" class="form-control" placeholder="Duration" aria-describedby="basic-addon1" [formControl]="serviceForm.controls['duration']"> -->
-    <p-calendar [formControl]="serviceForm.controls['duration']" [timeOnly]="true" placeholder="Duration" timeFormat="HH:mm"></p-calendar>
+    <input id="duration" type="time" class="form-control" [formControl]="serviceForm.controls['duration']">
+    <!-- <p-calendar [formControl]="serviceForm.controls['duration']" [timeOnly]="true" placeholder="Duration" timeFormat="HH:mm"></p-calendar> -->
   </div>
   <div *ngIf="serviceForm.controls['duration'].hasError('required') && serviceForm.controls['duration'].touched" class="alert alert-danger">You must include a duration service`s.</div>
   <div class="input-group" [ngClass]="{'has-error':!serviceForm.controls['price'].valid && serviceForm.controls['price'].touched}">
