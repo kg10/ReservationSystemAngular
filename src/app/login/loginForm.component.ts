@@ -58,7 +58,7 @@ export class LoginForm implements OnInit {
             'city': [null, Validators.required],
             'street': [null, Validators.required],
             'numberStreet': [null, Validators.required],
-            'postalCode': [null, Validators.required],
+            'postalCode': [null, Validators.compose([Validators.pattern("[0-9]{2}-[0-9]{3}"), Validators.required])],
             'personnelId': [null],
         })
 
@@ -68,7 +68,7 @@ export class LoginForm implements OnInit {
     }
 
     showAlert(type: string, text: string) {
-        this.messageService.add({ severity: type, summary: 'Error', detail: text });
+        this.messageService.add({ severity: type, summary: type, detail: text });
     }
 
     isValidForm() {

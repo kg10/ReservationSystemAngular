@@ -98,12 +98,14 @@ export class AllDataComponent implements OnInit {
 
       if (this.timeForm.value.day === element.day) {
         this.timeForm.reset();
+        this.showAlert("error", "That day is arelady busy");
       }
     });
     //cos do poprawy 
     if (this.timeForm.value.day !== null && this.timeForm.value.timeFrom !== null && this.timeForm.value.timeTo !== null) {
       this.timeList.push(new TimeTable(this.timeForm.value.day, this.timeForm.value.timeFrom + ":00", this.timeForm.value.timeTo + ":00"));
       this.timeForm.reset();
+      this.showAlert("success", "The work time has been added");
     }
     else{}
       
@@ -125,7 +127,7 @@ export class AllDataComponent implements OnInit {
   }
 
   showAlert(type: string, text: string) {
-    this.messageService.add({ severity: type, summary: 'Error', detail: text });
+    this.messageService.add({ severity: type, summary: type, detail: text });
 }
 
  

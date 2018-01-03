@@ -158,6 +158,7 @@ export class HttpService {
 
     editService(url: string, service: Service): Observable<Service> {
         let storedToken: string = localStorage.getItem("headers");
+        service.duration = service.duration.substring(0,8);
         return this._http
             .put(url + "/" + service.id, service, { headers: JSON.parse(storedToken) })
             .map(this.extractData);

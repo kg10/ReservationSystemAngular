@@ -7,6 +7,8 @@ import { MatTableModule } from '@angular/material';
 import { Assign } from '../model/listOfAssign.model';
 import { TimeTable } from '../model/timeTable.model';
 import { TimeRequest } from '../model/timeRequest.model';
+import { Message } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
 // import { DataSource } from '@angular/cdk/collections';
 // import { Observable } from 'rxjs/Observable';
 
@@ -14,7 +16,7 @@ import { TimeRequest } from '../model/timeRequest.model';
   selector: 'app-edit-data',
   templateUrl: './edit-data.component.html',
   styleUrls: ['./edit-data.component.css'],
-  providers: [HttpService],
+  providers: [HttpService, MessageService],
 })
 export class EditDataComponent implements OnInit {
   urlName: String;
@@ -33,9 +35,10 @@ export class EditDataComponent implements OnInit {
   serviceName: String;
   rememberId: any;
   rememberTimeId: any;
+  msgs: Message[] = [];
   //dataSource = new MatTableModule;
 
-  constructor(fb: FormBuilder, private _httpService: HttpService) {
+  constructor(fb: FormBuilder, private _httpService: HttpService, private messageService: MessageService) {
     // this.urlName = "http://localhost:8072";
     this.urlName = "http://192.168.99.100:8073/api";
     this.serviceForm = fb.group({
@@ -68,6 +71,9 @@ export class EditDataComponent implements OnInit {
     this.findAllPersonnel();
   }
 
+  showAlert(type: string, text: string) {
+    this.messageService.add({ severity: type, summary: type , detail: text });
+}
 
   findAllPersonnel() {
     this._httpService
@@ -120,6 +126,7 @@ export class EditDataComponent implements OnInit {
     this.timeTableList.forEach(element => {
       if (element.day === this.timeForm.value.day) {
         flag = false;
+        this.showAlert("error", "Invalid data");
       }
     });
     if (flag === true && this.timeForm.value.day != null && this.timeForm.value.timeFrom != null && this.timeForm.value.timeTo != null) {
@@ -200,7 +207,7 @@ export class EditDataComponent implements OnInit {
       .assignServToPers(this.urlName + "/reg/assign/" + this.rememberId, list)
       .subscribe(
       value => {
-
+        this.showAlert("success", "Data about services has been edited");
       },
       error => alert(error),
       () => console.log("Finished"),
@@ -229,7 +236,7 @@ export class EditDataComponent implements OnInit {
       .addTime(this.urlName + "/reg/addTimeTable", list)
       .subscribe(
       value => {
-
+        this.showAlert("success", "Data about time has been edited");
       },
       error => alert(error),
       () => console.log("Finished"),
@@ -238,12 +245,14 @@ export class EditDataComponent implements OnInit {
 
   editOneService(registerForm: NgForm) {
     this.serviceForm.value.duration+=":00";
+    
     this._httpService
       .editService(this.urlName + "/reg/updateService", this.serviceForm.value)
       .subscribe(
       value => {
         this.serviceForm.reset(),
-          value = value
+          value = value,
+          this.showAlert("success", "Data about service has been edited")
       },
       error => alert(error),
       () => {
@@ -269,7 +278,8 @@ export class EditDataComponent implements OnInit {
       .subscribe(
       value => {
         this.personnelForm.reset(),
-          value = value
+          value = value,
+          this.showAlert("success", "Data about person has been edited")
       },
       error => alert(error),
       () => {
@@ -285,7 +295,8 @@ export class EditDataComponent implements OnInit {
       .subscribe(
       value => {
         this.personnelForm.reset(),
-          value = value
+          value = value,
+          this.showAlert("error", "The person has been deleted")
       },
       error => alert(error),
       () => {

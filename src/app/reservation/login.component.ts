@@ -99,6 +99,8 @@ export class Login implements OnInit {
         this.reserv.loginClient = localStorage.getItem("login");
 
         this.reservation(this.reserv);
+        // this.reser.date="";
+        // this.date="";
         // this.valIdPerson = this.valIdService = this.rememberTime = this.date = this.reser = null;
     }
     submitt(date: any) {
