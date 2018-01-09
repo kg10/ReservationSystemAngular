@@ -3,7 +3,8 @@
 
 <div class="personTable">
   <h3>Update your personel</h3>
-  <table datatable class="row-border hover" id="personnelTablee" cellspacing="0" width="90%">
+  <!-- <table datatable class="row-border hover" id="personnelTablee" cellspacing="0" width="90%"> -->
+  <table class="table table-hover" id="personnelTable2" cellspacing="0" width="90%">
     <thead>
       <tr>
         <th>First Name</th>
@@ -241,8 +242,8 @@
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" (click)="disablePerson()" data-toggle="tooltip" data-dismiss="modal"
-            data-placement="bottom" title="Click if you want delete this person">Delete person</button>
+          <button type="submit" class="btn btn-primary" (click)="disablePerson()" data-toggle="tooltip" data-dismiss="modal" data-placement="bottom"
+            title="Click if you want delete this person">Delete person</button>
           <button type="submit" class="btn btn-primary" (click)="editOnePerson()" data-dismiss="modal" [disabled]="!personnelForm.valid">
             <span class="glyphicon glyphicon-user"></span> Edit</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -256,7 +257,8 @@
 
 <div class="serviceTable">
   <h3>Update your services</h3>
-  <table datatable class="row-border hover" id="serviceTable">
+  <!-- <table datatable class="row-border hover" id="serviceTable"> -->
+  <table class="table table-hover" id="personnelTable2" cellspacing="0" width="90%">
     <thead>
       <tr>
         <th>Service</th>

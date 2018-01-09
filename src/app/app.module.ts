@@ -32,11 +32,11 @@ import {CalendarModule} from 'primeng/primeng';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'logowanie',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'logowanie',
+    path: 'login',
     component: LoginForm
   },
   {
@@ -78,7 +78,7 @@ const appRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'logowanie',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
 

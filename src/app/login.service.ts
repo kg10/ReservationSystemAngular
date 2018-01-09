@@ -25,9 +25,11 @@ export class HttpService {
 
     signIn(url: string, dataLogin: DataLogin): Observable<String> {
         let headers: Headers = new Headers();
-        headers.append("Authorization", "Basic " + btoa(dataLogin.login + ":" + dataLogin.password));
+        headers.append('Authorization', 'Basic ' + btoa(dataLogin.login + ':' + dataLogin.password));
         // headers.append("Content-Type", "application/x-www-form-urlencoded");
-        headers.append("Content-Type", "application/json");
+        headers.append('Content-Type', 'application/json');
+        headers.append('Access-Control-Allow-Origin', '*');
+        // headers.append('X-Requested-With', 'XMLHttpRequest');
         localStorage.setItem("headers", JSON.stringify(headers));
         console.log(dataLogin.login + " " + dataLogin.password)
 
@@ -35,7 +37,8 @@ export class HttpService {
         let storedToken: string = localStorage.getItem("headers");
 
         return this._http
-            .get(url, { headers: JSON.parse(storedToken) })
+            // .get(url, { headers: JSON.parse(storedToken) })
+            .get(url, new RequestOptions({ headers: headers }))
             .do(res => {
                 if (res.status === 200) {
                     this.router.navigate(['../nav/reservation']);
@@ -122,8 +125,12 @@ export class HttpService {
 
 
     register(url: string, reg: Registration): Observable<Registration> {
+        let head: Headers = new Headers();
+        head.append('Content-Type', 'application/json');
+        head.append('Access-Control-Allow-Origin', '*');
+
         return this._http
-            .post(url, reg)
+            .post(url, reg, { headers: head } )
             .map(this.extractData);
     }
 
